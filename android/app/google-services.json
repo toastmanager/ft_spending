@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "433359928875",
+    "project_id": "ft-spending",
+    "storage_bucket": "ft-spending.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433359928875:android:2a16d13ae82e9cb84a746e",
+        "android_client_info": {
+          "package_name": "com.example.ft_spending"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433359928875-c5aa0arj7t4q3at2u7mnoqcjjuvuka3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqGLXJnMoyh3MIh7auGu8M3gaBRJh034g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433359928875-c5aa0arj7t4q3at2u7mnoqcjjuvuka3r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
