@@ -1,130 +1,197 @@
 import 'package:flutter/material.dart';
 
+// Style
+import 'package:ft_spending/frontend/global/app_style.dart' as app_style;
+
+// Models
+import 'package:ft_spending/backend/models/data.dart';
+import 'package:ft_spending/frontend/pages/activity_page.dart';
+
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  List<ActivityModel> categories = [];
+
+  void _getInitialInfo() {
+    categories = ActivityModel.getCategories();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Главное'),
-        centerTitle: true,
-      ),
-      body: Column(
+    _getInitialInfo();
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 50,),
-          _searchField(),
-          SizedBox(height: 50,),
-          Row(
-            children: [
-              Container(
-                width: 500,
-                height: 1000,
-                color: Colors.amber,
-                child: Column(
-
-                ),
-              ),
-              _eventLongCardList(),
-            ],
-          ),
+          _mainActivity(),
+          const SizedBox(height: 50,),
+          _activityListView('Волонтёрство'),
+          const SizedBox(height: 50,),
+          _activityListView('Лагеря'),
+          const SizedBox(height: 50,),
+          _activityListView('Секции и кружки'),
+          const SizedBox(height: 50,),
+          _activityListView('Подработка'),
+          const SizedBox(height: 50,),
+          _activityListView('Мероприятия'),
         ],
       ),
     );
   }
 
-  Expanded _eventLongCardList() {
-    return Expanded(
+  Column _activityListView(
+    String _listActivityType,
+  ) {
+    Color _cardColor = Colors.red;
+    List<ActivityModel> _currentActivities = [];
+
+    switch (_listActivityType) {
+      case 'Волонтёрство':
+        categories.forEach((element) {
+          if (element.activityType == app_style.volunteerType) {
+            _currentActivities.add(element);
+          }
+        });
+      break;
+      case 'Лагеря':
+        categories.forEach((element) {
+          if (element.activityType == app_style.campType) {
+            _currentActivities.add(element);
+          }
+        });
+      break;
+      case 'Секции и кружки':
+        categories.forEach((element) {
+          if (element.activityType == app_style.sectionType) {
+            _currentActivities.add(element);
+          }
+        });
+      break;
+      case 'Подработка':
+        categories.forEach((element) {
+          if (element.activityType == app_style.workType) {
+            _currentActivities.add(element);
+          }
+        });
+      break;
+      case 'Мероприятия':
+        categories.forEach((element) {
+          if (element.activityType == app_style.eventType) {
+            _currentActivities.add(element);
+          }
+        });
+      break;
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 35),
+          child: Text(
+            _listActivityType,
+            style: app_style.h2TextStyle,
+          ),
+        ),
+        const SizedBox(height: 5,),
+        Container(
+          height: 320,
           child: ListView.separated(
-            itemCount: 20,
-            separatorBuilder: (context, index) => SizedBox(height: 10,),
+            scrollDirection: Axis.horizontal,
+            itemCount: _currentActivities.length,
+            separatorBuilder: (context, index) => SizedBox(width: 60,),
             itemBuilder: (context, index) {
-              return _eventLongCard(
+              return _activityCard(
                 context,
-                'https://ss.sport-express.ru/userfiles/materials/180/1809138/volga.jpg',
-                'Тренировки с роки роки',
-                'Будем тренироваться по технике роки роки',
-                [
-                  Text('Волонтёрство'),
-                  SizedBox(width: 10,),
-                  Text('14+'),
-                  SizedBox(width: 10,),
-                  Text(''),
-                ],
+                _currentActivities[index].index,
+                _currentActivities[index].cardColor,
+                _currentActivities[index].image,
+                _currentActivities[index].activityName,
+                _currentActivities[index].activityDesc,
+                _currentActivities[index].phone,
+                _currentActivities[index].adress,
               );
             },
           ),
-        );
+        )
+      ],
+    );
   }
 
-  Container _eventLongCard(
+  MouseRegion _activityCard(
     BuildContext context,
-    String _imageAdress,
-    String _name,
-    String _description,
-    List<Widget> _tags,
+    int _index,
+    Color _cardColor,
+    String _image,
+    String _activityName,
+    String _activityDesc,
+    String _phone,
+    String _adress,
   ) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: Colors.black26,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(width: 10,),
-          Image.network(
-            _imageAdress,
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => Navigator.pushNamed(context, '/activity/$_index',),
+        child: Container(
+          width: 350,
+          padding: const EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+            color: _cardColor,
+            borderRadius: const BorderRadius.all(Radius.circular(10))
           ),
-          SizedBox(width: 10,),
-          Column(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                _name,
-                style: TextStyle(
-                  fontSize: 24,
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 120,
-                child: Text(
-                  _description,
-                  style: TextStyle(
-                    fontSize: 16,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Image.network(
+                          _image,
+                          fit: BoxFit.cover,
+                          width: constraints.maxWidth,
+                          height: 150,
+                          errorBuilder: (context, error, stackTrace) {
+                            return SizedBox();
+                          },
+                        );
+                      },
+                    ),
                   ),
-                ),
+                  SizedBox(height: 20,),
+                  Text(_activityName, style: app_style.h2TextStyle,),
+                  Text(_activityDesc),
+                ],
               ),
-              Row(
-                children: _tags,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Номер: ' + _phone),
+                  Text('Адрес: ' + _adress),
+                ],
               )
             ],
           ),
-        ],
+        ),
       ),
     );
   }
 
-  Container _searchField() {
+  Container _mainActivity() {
     return Container(
-          margin: EdgeInsets.only(left: 60, right: 60),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: Colors.blue,
-              width: 3,
-            )
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-        );
+        width: double.infinity,
+        height: 250,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Заголовок', style: app_style.h2TextStyle,),
+          ],
+        ),
+      );
   }
 }
