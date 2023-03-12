@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 // import 'package:firebase_database/firebase_database.dart';
 // import 'firebase_options.dart';
 
+// Srtyle
+import 'frontend/global/app_style.dart' as app_style;
+
 // Pages
 import 'frontend/pages/home_page.dart' as HomePage;
 import 'frontend/pages/activity_page.dart' as ActivityPage;
@@ -37,8 +40,8 @@ class MyApp extends StatelessWidget {
         if (settings.name == '/') {
           return MaterialPageRoute(
             builder: (context) {
-              // return MainScaffold(body: HomePage.HomePage());
-              return MainScaffold(body: SearchingPage.SearchingPage());
+              return MainScaffold(body: HomePage.HomePage());
+              // return MainScaffold(body: SearchingPage.SearchingPage());
             },
           );
         }
@@ -83,8 +86,65 @@ class MainScaffold extends StatelessWidget {
     return Scaffold(
       body: body,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         actions: [
-          Text('data')
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/',);
+                      html.window.history.pushState(null, '/', '/');
+                    },
+                    child: Text('Главное'),
+                  ),
+                ),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Text('Волонтёрство'),
+                  ),
+                ),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Text('Лагеря'),
+                  ),
+                ),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Text('Секции'),
+                  ),
+                ),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Text('Мероприятия'),
+                  ),
+                ),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '#/search',);
+                      html.window.history.pushState(null, '/', '/search');
+                    },
+                    child: Icon(Icons.search),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       )
     );

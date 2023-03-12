@@ -25,8 +25,9 @@ class ActivityPage extends StatelessWidget {
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 50,),
+              const SizedBox(height: 50,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -37,7 +38,7 @@ class ActivityPage extends StatelessWidget {
                       children: [
                         Text(categories[index].activityName, style: app_style.h1TextStyle,),
                         Image.network(categories[index].image, width: 500,),
-                        Text('Описание:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\fgfdgdf', style: app_style.pTextStyle,),
+                        Text('Описание:\n${categories[index].activityDesc}', style: app_style.pTextStyle,),
                       ],
                     ),
                   ),
