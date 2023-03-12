@@ -9,7 +9,7 @@ Route<dynamic> NotFoundPage() {
         child: Center(
           child: Text(
             'Похоже что такой страницы не существует',
-            style: app_style.h2TextStyle,
+            style: app_style.focusTextStyle,
           ),
         ),
       );

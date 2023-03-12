@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ft_spending/frontend/global/app_style.dart' as app_style;
-import 'package:ft_spending/backend/models/data.dart';
+import 'package:ft_spending/backend/models/ActivityModel.dart';
 
 class ActivityPage extends StatelessWidget {
   List<ActivityModel> categories = [];
@@ -19,41 +19,83 @@ class ActivityPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _getInitialInfo();
-    return FittedBox(
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(categories[index].activityName, style: app_style.h2TextStyle,),
-                Image.network(categories[index].image, width: 500,),
-                Text('Описание:'),
-                Text('Условия'),
-              ],
-            ),
-            SizedBox(width: 100,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Адрес организации: ' + categories[index].adress),
-                TextButton(
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
-                      EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20)
+    return Center(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Column(
+            children: [
+              SizedBox(height: 50,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 700,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(categories[index].activityName, style: app_style.h1TextStyle,),
+                        Image.network(categories[index].image, width: 500,),
+                        Text('Описание:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\fgfdgdf', style: app_style.pTextStyle,),
+                      ],
                     ),
-                    backgroundColor: MaterialStateProperty.all(Colors.blue),
                   ),
-                  onPressed: () {},
-                  child: Text('Написать сообщение', style: TextStyle(color: Colors.white),)
-                ),
-                Text('Комментарии'),
-              ],
-            ),
-          ],
+                  const SizedBox(width: 50,),
+                  _actionInfoSection(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Column _actionInfoSection() {
+    return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Тип занятия: ' + categories[index].activityType),
+                    Text('Оценка: #оценка#/5 ( #сколько отзывов# отзыва(ов))'),
+                    Text('Телефон: ' + categories[index].phone),
+                    Text('Возрастные ограничения: ' + '#тут возрастные ограничения#')
+                  ],
+                ),
+                const SizedBox(height: 30,),
+                Container(
+                  width: 470,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // TextField(),
+                      // TextField(),
+                      TextButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.blue),
+                        ),
+                        child: Text('Отправить комментарий', style: TextStyle(color: Colors.white),)
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Никита Громов', style: app_style.focusTextStyle,),
+                              Text('Комментарий долгий долгий долгий долгий долгий долгий долгий долгий', style: app_style.pTextStyle,)
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            );
   }
 }

@@ -1,5 +1,6 @@
 // Standart Packages
 import 'dart:ui';
+import 'dart:html' as html;
 import 'package:flutter/material.dart';
 
 // Firebase
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'frontend/pages/home_page.dart' as HomePage;
 import 'frontend/pages/activity_page.dart' as ActivityPage;
 import 'frontend/pages/404_page.dart' as NotFoundPage;
+import 'frontend/pages/searching_page.dart' as SearchingPage;
 
 void main() async {
   // await Firebase.initializeApp(
@@ -35,7 +37,8 @@ class MyApp extends StatelessWidget {
         if (settings.name == '/') {
           return MaterialPageRoute(
             builder: (context) {
-              return MainScaffold(body: HomePage.HomePage());
+              // return MainScaffold(body: HomePage.HomePage());
+              return MainScaffold(body: SearchingPage.SearchingPage());
             },
           );
         }
@@ -46,6 +49,14 @@ class MyApp extends StatelessWidget {
               return MainScaffold(
                 body: ActivityPage.ActivityPage(index: int.parse(path[2]))
               );
+            },
+          );
+        }
+
+        if (path[1] == 'search') {
+          return MaterialPageRoute(
+            builder: (context) {
+              return MainScaffold(body: SearchingPage.SearchingPage());
             },
           );
         }
@@ -70,20 +81,17 @@ class MainScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black
-        ),
-        title: Text('Главное', style: TextStyle(color: Colors.black),),
-        backgroundColor: Colors.white,
-      ),
       body: body,
+      appBar: AppBar(
+        actions: [
+          Text('data')
+        ],
+      )
     );
   }
 }
 
 class CustomScrollBehavior extends MaterialScrollBehavior {
-  // Override behavior methods and getters like dragDevices
   @override
   Set<PointerDeviceKind> get dragDevices => {
         PointerDeviceKind.touch,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:html' as html;
 
 // Style
 import 'package:ft_spending/frontend/global/app_style.dart' as app_style;
 
 // Models
-import 'package:ft_spending/backend/models/data.dart';
-import 'package:ft_spending/frontend/pages/activity_page.dart';
+import 'package:ft_spending/backend/models/ActivityModel.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -91,7 +91,7 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.only(left: 35),
           child: Text(
             _listActivityType,
-            style: app_style.h2TextStyle,
+            style: app_style.focusTextStyle,
           ),
         ),
         const SizedBox(height: 5,),
@@ -132,8 +132,12 @@ class HomePage extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => Navigator.pushNamed(context, '/activity/$_index',),
-        child: Container(
+        onTap: () {
+          Navigator.pushNamed(context, '/activity/$_index',);
+          html.window.history.pushState(null, 'activity', '#/activity/$_index');
+        },
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 200),
           width: 350,
           padding: const EdgeInsets.all(15.0),
           decoration: BoxDecoration(
@@ -164,8 +168,8 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20,),
-                  Text(_activityName, style: app_style.h2TextStyle,),
-                  Text(_activityDesc),
+                  Text(_activityName, style: app_style.focusTextStyle,),
+                  Text(_activityDesc, style: app_style.pTextStyle,),
                 ],
               ),
               Column(
@@ -189,7 +193,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Заголовок', style: app_style.h2TextStyle,),
+            Text('Заголовок', style: app_style.focusTextStyle,),
           ],
         ),
       );
